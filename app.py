@@ -7,26 +7,24 @@ import socket
 
 app = Flask(__name__)
 
+def getGoogleKeys():
+    google_keys = {}
+    google_keys['client']=os.getenv('GOOGLE_OAUTH_CLIENT_ID')
+    google_keys['secret']=os.getenv('GOOGLE_OAUTH_SECRET')
+    return google_keys
+
 @app.route("/")
 def main():
-    # try:
-    #     visits = redis.incr("counter")
-    # except RedisError:
-    #     visits = "<i>cannot connect to Redis, counter disabled</i>"
 
-    # html = "<h3>Hello {name}!</h3>" \
-    #        "<b>Hostname:</b> {hostname}<br/>" \
-    #        "<b>Visits:</b> {visits}"
-    # return html.format(name=os.getenv("NAME", "world"), hostname=socket.gethostname(), visits=visits)
+    google_keys = getGoogleKeys()
+    print(google_keys)
+
     json_dict = request.get_json()
-
-
     data = {'testJsonKey': 'testJsonValue NEW'}
-    # return jsonify(data)
-
     response = make_response(jsonify(data))
     response.set_cookie('username', 'the username')
     return response
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8090)
+
