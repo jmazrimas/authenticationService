@@ -7,10 +7,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-
-    print(google_auth.google_keys)
-
-    json_dict = request.get_json()
     data = {'testJsonKey': 'testJsonValue NEW'}
     response = make_response(jsonify(data))
     response.set_cookie('username', 'the username')
@@ -33,10 +29,6 @@ def login_callback():
 
     return render_template(
         'login-callback.html',
-        login_url=google_auth.login_url,
-        access_token=access_token,
-        expires_in=expires_in,
-        refresh_token=refresh_token,
         user_name=user_info['name'],
         user_id=user_info['user_id'])
 
