@@ -33,10 +33,6 @@ def login_callback():
 
     return render_template(
         'login-callback.html',
-        login_url=google_auth.login_url,
-        access_token=access_token,
-        expires_in=expires_in,
-        refresh_token=refresh_token,
         user_name=user_info['name'],
         user_id=user_info['user_id'])
 
