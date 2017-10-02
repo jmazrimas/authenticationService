@@ -7,10 +7,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-
-    print(google_auth.google_keys)
-
-    json_dict = request.get_json()
     data = {'testJsonKey': 'testJsonValue NEW'}
     response = make_response(jsonify(data))
     response.set_cookie('username', 'the username')
