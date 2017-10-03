@@ -21,4 +21,4 @@ ENV GOOGLE_OAUTH_CLIENT_ID=$google_oauth_client_id
 ENV GOOGLE_OAUTH_SECRET=$google_oauth_secret
 
 # Run app.py when the container launches
-CMD ["python", "app.py"]
+CMD ["python", "flask/app.py"]
