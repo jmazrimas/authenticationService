@@ -1,6 +1,5 @@
 # Use an official Python runtime as a parent image
-# FROM python:2.7-slim
-FROM mikemanger/python27-mysql
+FROM python:2.7-slim
 
 # Set the working directory to /app
 WORKDIR /app
@@ -22,4 +21,4 @@ ENV GOOGLE_OAUTH_CLIENT_ID=$google_oauth_client_id
 ENV GOOGLE_OAUTH_SECRET=$google_oauth_secret
 
 # Run app.py when the container launches
-CMD ["python", "flask/app.py"]
+CMD ["python", "app.py"]
