@@ -11,3 +11,8 @@ class User(Base):
     renew_key = Column(String(256), nullable=False)
     session = Column(String(256), nullable=False)
     expire_time = Column(DateTime, nullable=False)
+
+    def public_user(this):
+        return {
+            'name': this.name
+        }

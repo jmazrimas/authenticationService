@@ -40,13 +40,24 @@ def generate_token_url(code):
     parsed_url[4] = urlencode(params)
     return urlparse.urlunparse(parsed_url)
 
+def generate_renew_url(refresh_token):
+    base_url = "https://www.googleapis.com/oauth2/v4/token"
+    parsed_url = list(urlparse.urlparse(base_url))
+    params = {
+        'refresh_token': refresh_token,
+        'client_id': google_keys['client'],
+        'client_secret': google_keys['secret'],
+        'grant_type': 'refresh_token'
+    }
+    parsed_url[4] = urlencode(params)
+    return urlparse.urlunparse(parsed_url)
+
 def get_user_info(token):
     user_info_url = 'https://www.googleapis.com/oauth2/v3/userinfo?alt=json&access_token='+token
     res = requests.get(user_info_url)
     return {'user_id': res.json()['sub'], 'name': res.json()['name']}
 
 def get_user_keys(code):
-    # code = request.args.get('code')
     token_url = generate_token_url(code)
     res = requests.post(token_url)
     access_token = res.json()['access_token']
@@ -59,3 +70,6 @@ def get_user_keys(code):
     user_info['refresh_token'] = refresh_token
 
     return user_info
+
+def refresh_user_keys():
+    token_url = generate_token_url(code)
