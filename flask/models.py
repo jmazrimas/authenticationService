@@ -6,7 +6,6 @@ class User(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(256), nullable=False)
-    third_party = Column(String(256), nullable=False)
     third_party_id = Column(String(256), nullable=False)
     access_key = Column(String(256), nullable=False)
     renew_key = Column(String(256), nullable=False)

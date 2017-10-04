@@ -9,18 +9,31 @@ def hash_key(key):
     hash.update(key)
     return hash.hexdigest()
 
+def update_user_keys(existing_user, new_user):
+    existing_user.access_key = new_user.access_key
+    existing_user.renew_key = new_user.renew_key
+    existing_user.session = new_user.session
+    existing_user.expire_time = new_user.expire_time
+
 def update_or_create(new_user):
+
     s = db_session()
     s.begin()
-    s.add(new_user)
+
+    existing_user = s.query(User).filter_by(third_party_id = new_user.third_party_id).first()
+
+    if existing_user:
+        update_user_keys(existing_user, new_user)
+    else:
+        s.add(new_user)
+
     s.commit()
 
 def google_user_model(user_data, token_return_data):
 
     google_user = User(
             name = user_data['name'],
-            third_party = 'google',
-            third_party_id = user_data['user_id'],
+            third_party_id = user_data['user_id']+'@google.com',
             access_key = token_return_data['access_token'],
             renew_key = token_return_data['refresh_token'],
             session = hash_key(token_return_data['access_token']),
