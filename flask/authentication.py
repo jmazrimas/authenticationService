@@ -39,8 +39,6 @@ def login_callback():
 
 @authentication.route("/validate-user")
 def validate_user():
-    if 'dmc_session' in request.cookies:
-        print 'public USER', user_controller.return_valid_user(request.cookies.get('dmc_session'))
-    data = {'testJsonKey': 'testJsonValue NEW'}
+    data = user_controller.return_valid_user(request.cookies.get('dmc_session'))
     response = make_response(jsonify(data))
     return response

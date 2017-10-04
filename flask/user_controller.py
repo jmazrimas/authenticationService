@@ -43,7 +43,9 @@ def return_valid_user(session_hash):
     if existing_user:
         if session_is_valid(existing_user):
             return existing_user.public_user()
-        return None
+        else:
+            google_auth.refresh_user_keys(existing_user.renew_key)
+            return None
     else:
         return None
 
