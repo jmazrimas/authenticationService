@@ -23,15 +23,16 @@ def login():
 @authentication.route("/login-callback")
 def login_callback():
     code = request.args.get('code')
-    token_url = google_auth.generate_token_url(code)
-    res = requests.post(token_url)
-    access_token = res.json()['access_token']
-    expires_in = res.json()['expires_in']
-    refresh_token = res.json()['refresh_token']
+    user_info = google_auth.get_user_keys(code)
+    # token_url = google_auth.generate_token_url(code)
+    # res = requests.post(token_url)
+    # access_token = res.json()['access_token']
+    # expires_in = res.json()['expires_in']
+    # refresh_token = res.json()['refresh_token']
 
-    user_info = google_auth.get_user_info(access_token)
+    # user_info = google_auth.get_user_info(access_token)
 
-    user_controller.get_or_create_google(user_info, res.json())
+    user_controller.get_or_create_google(user_info)
 
     return render_template(
         'login-callback.html',

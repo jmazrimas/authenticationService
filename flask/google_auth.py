@@ -44,3 +44,18 @@ def get_user_info(token):
     user_info_url = 'https://www.googleapis.com/oauth2/v3/userinfo?alt=json&access_token='+token
     res = requests.get(user_info_url)
     return {'user_id': res.json()['sub'], 'name': res.json()['name']}
+
+def get_user_keys(code):
+    # code = request.args.get('code')
+    token_url = generate_token_url(code)
+    res = requests.post(token_url)
+    access_token = res.json()['access_token']
+    expires_in = res.json()['expires_in']
+    refresh_token = res.json()['refresh_token']
+
+    user_info = get_user_info(access_token)
+    user_info['access_token'] = access_token
+    user_info['expires_in'] = expires_in
+    user_info['refresh_token'] = refresh_token
+
+    return user_info
