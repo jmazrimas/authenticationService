@@ -2,25 +2,10 @@ from flask import Flask, request, jsonify, make_response, render_template
 import socket
 import requests
 import google_auth
-from flask_sqlalchemy import SQLAlchemy
+from authentication_data_model import AuthenticationDataModel
 
 app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://authentication:authenticationpass@localhost/authentication'
-db = SQLAlchemy(app)
-
-
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
-
-    def __repr__(self):
-        return '<User %r>' % self.name
-
-test_user = User(name='test user')
-db.session.add(test_user)
-db.session.commit()
+adm = AuthenticationDataModel(app)
 
 @app.route("/")
 def main():
