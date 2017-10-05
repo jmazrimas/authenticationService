@@ -10,14 +10,10 @@ authentication = Blueprint('authentication', __name__)
 
 @authentication.route("/")
 def main():
-    data = {'testJsonKey': 'testJsonValue NEW'}
-    response = make_response(jsonify(data))
-    response.set_cookie('dmc_session', 'SESSIONHASHx')
-    return response
+    return render_template('login.html', login_url=google_auth.login_url)
 
 @authentication.route("/login")
 def login():
-
     return render_template('login.html', login_url=google_auth.login_url)
 
 @authentication.route("/login-callback")
