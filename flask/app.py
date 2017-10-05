@@ -1,11 +1,15 @@
 from flask import Flask
 from database import init_engine, init_db
-
+import os
 
 def init_app():
     print 'init app called'
+    db_name = os.environ['AUTH_SVC_DB_NAME']
+    db_user = os.environ['AUTH_SVC_DB_USER']
+    db_pass = os.environ['AUTH_SVC_DB_PASS']
+
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://authentication:authenticationpass@localhost/authentication'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://'+db_user+':'+db_pass+'@localhost/'+db_name
     init_engine(app.config['SQLALCHEMY_DATABASE_URI'])
     init_db()
     from authentication import authentication

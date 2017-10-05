@@ -17,10 +17,10 @@ stop_previous_db() {
 start_db() {
   cd database
   sudo docker pull mariadb:latest
-  sudo docker run --name authentication-mariadb -p 3306:3306 --env-file env_variables -d mariadb:latest
+  sudo docker run --name authentication-mariadb -p 3306:3306 --env-file env_variables -d mariadb:latest authentication-mariadb
 
-  sleep 15
-  cat authentication-schema.sql | sudo docker exec -i authentication-mariadb /usr/bin/mysql -u authentication -p authenticationpass authentication
+  # sleep 15
+  # cat authentication-schema.sql | sudo docker exec -i authentication-mariadb /usr/bin/mysql -u authentication -p authenticationpass authentication
   cd ..
 }
 
