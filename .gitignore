@@ -1,3 +1,4 @@
 *.pyc
 *keys.json
 deploy.sh
+env_variables
