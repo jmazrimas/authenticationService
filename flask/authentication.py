@@ -24,7 +24,7 @@ def login():
 def login_callback():
     code = request.args.get('code')
     user_info = google_auth.get_user_keys(code)
-    session_hash = user_controller.get_or_create_google(user_info)
+    session_hash = user_controller.get_or_create_google_new(user_info)
 
     response = make_response(
         render_template(
