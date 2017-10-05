@@ -39,6 +39,18 @@ def login_callback():
 
 @authentication.route("/validate-user")
 def validate_user():
-    data = user_controller.return_valid_user(request.cookies.get('dmc_session'))
+    user = user_controller.return_valid_user(request.cookies.get('dmc_session'))
+    new_session = None
+
+    if user is not None:
+        if user.session_is_expired():
+            new_session = user_controller.renew_google_user(user)
+        data = user.public_user()
+    else:
+        data = None
+
     response = make_response(jsonify(data))
+
+    if new_session is not None:
+        response.set_cookie('dmc_session', new_session)
     return response

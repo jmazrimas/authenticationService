@@ -27,15 +27,17 @@ def return_valid_user(session_hash):
     existing_user = s.query(User).filter_by(session = session_hash).first()
     s.commit()
     if existing_user:
-        if session_is_valid(existing_user):
-            return existing_user.public_user()
-        else:
-            renewed_user_info = google_auth.refresh_user_keys(existing_user.renew_key)
-            renewed_user_info = map_google_user_data(renewed_user_info)
-            s.begin()
-            update_user_keys(existing_user, renewed_user_info)
-            s.commit()
-            return existing_user.public_user()
+        # if session_is_valid(existing_user):
+        # if !existing_user.session_is_expired():
+        #     return existing_user.public_user()
+        # else:
+        #     renewed_user_info = google_auth.refresh_user_keys(existing_user.renew_key)
+        #     renewed_user_info = map_google_user_data(renewed_user_info)
+        #     s.begin()
+        #     update_user_keys(existing_user, renewed_user_info)
+        #     s.commit()
+        #     return existing_user.public_user()
+        return existing_user
     else:
         return None
 
@@ -81,3 +83,12 @@ def create_google_user(user_data, db_session):
     new_user = google_user_model(user_data)
     db_session.add(new_user)
     return new_user
+
+def renew_google_user(existing_user):
+    renewed_user_info = google_auth.refresh_user_keys(existing_user.renew_key)
+    renewed_user_info = map_google_user_data(renewed_user_info)
+    s = db_session()
+    s.begin()
+    update_user_keys(existing_user, renewed_user_info)
+    s.commit()
+    return existing_user.session

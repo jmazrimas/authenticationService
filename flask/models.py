@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from database import Base
+from datetime import datetime, timedelta
 
 class User(Base):
     __tablename__ = 'users'
@@ -16,3 +17,6 @@ class User(Base):
         return {
             'name': this.name
         }
+
+    def session_is_expired(this):
+        return datetime.utcnow()+timedelta(minutes=10) > this.expire_time
