@@ -26,20 +26,7 @@ def return_valid_user(session_hash):
     s.begin()
     existing_user = s.query(User).filter_by(session = session_hash).first()
     s.commit()
-    if existing_user:
-        # if session_is_valid(existing_user):
-        # if !existing_user.session_is_expired():
-        #     return existing_user.public_user()
-        # else:
-        #     renewed_user_info = google_auth.refresh_user_keys(existing_user.renew_key)
-        #     renewed_user_info = map_google_user_data(renewed_user_info)
-        #     s.begin()
-        #     update_user_keys(existing_user, renewed_user_info)
-        #     s.commit()
-        #     return existing_user.public_user()
-        return existing_user
-    else:
-        return None
+    return existing_user
 
 def google_user_model(user_data):
 
