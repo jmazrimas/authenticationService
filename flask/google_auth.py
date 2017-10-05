@@ -64,8 +64,6 @@ def get_user_keys(code):
     expires_in = res.json()['expires_in']
     refresh_token = res.json()['refresh_token']
 
-    print '\n\n\nget keys', res.json()
-
     user_info = get_user_info(access_token)
     user_info['access_token'] = access_token
     user_info['expires_in'] = expires_in
@@ -78,8 +76,6 @@ def refresh_user_keys(renew_key):
     res = requests.post(renew_url)
     access_token = res.json()['access_token']
     expires_in = res.json()['expires_in']
-
-    print '\n\n\nrefresh keys', res.json()
 
     user_info = get_user_info(access_token)
     user_info['access_token'] = access_token
