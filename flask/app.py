@@ -10,7 +10,7 @@ def init_app():
     db_pass = os.environ['AUTH_SVC_DB_PASS']
 
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://'+db_user+':'+db_pass+'@authentication-mariadb/'+db_name
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://'+db_user+':'+db_pass+'@authentication-mariadb/'+db_name
     init_engine(app.config['SQLALCHEMY_DATABASE_URI'])
     init_db()
     from authentication import authentication

@@ -24,7 +24,7 @@ stop_previous() {
 start_db() {
   cd database
   sudo docker build -t authentication-mariadb .
-  sudo docker run --name authentication-mariadb --env-file ./env_variables.list -d authentication-mariadb
+  sudo docker run --network=auth_net --name authentication-mariadb --env-file ./env_variables.list -d authentication-mariadb
   cd ..
 }
 
@@ -32,7 +32,7 @@ start_flask() {
   cd flask
   sudo docker build --build-arg google_oauth_client_id=60575523939-uecotuip3btkh66604hnk9o9gm6uiv9t.apps.googleusercontent.com --build-arg google_oauth_secret=XyhqeMKs86XXW1vGWxQB0Tq0 --build-arg auth_svc_db_name=authentication --build-arg auth_svc_db_user=authentication --build-arg auth_svc_db_pass=authenticationpass -t authentication-server .
   # sudo docker run --name authentication-server -d -link authentication-mariadb -p 8090:8090 authentication-server
-  sudo docker run --name authentication-server -d -p 8090:8090 authentication-server
+  sudo docker run --network=auth_net --name authentication-server -d authentication-server
   cd ..
 }
 
