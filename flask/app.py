@@ -1,4 +1,5 @@
 from flask import Flask
+import mysql.connector
 from database import init_engine, init_db
 import os
 
@@ -9,7 +10,7 @@ def init_app():
     db_pass = os.environ['AUTH_SVC_DB_PASS']
 
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://'+db_user+':'+db_pass+'@localhost/'+db_name
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://'+db_user+':'+db_pass+'@authentication-mariadb/'+db_name
     init_engine(app.config['SQLALCHEMY_DATABASE_URI'])
     init_db()
     from authentication import authentication
