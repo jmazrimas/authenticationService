@@ -43,7 +43,7 @@ def validate_user():
             new_session = user_controller.renew_google_user(user)
         data = user.public_user()
     else:
-        data = None
+        data = {}
 
     response = make_response(jsonify(data))
 
