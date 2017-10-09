@@ -18,13 +18,18 @@ def login():
 
 @authentication.route("/login-callback")
 def login_callback():
-    code = request.args.get('code')
-    user_info = google_auth.get_user_keys(code)
-    session_hash = user_controller.get_or_create_google_new(user_info)
+    try:
+        code = request.args.get('code')
+        user_info = google_auth.get_user_keys(code)
+        session_hash = user_controller.get_or_create_google_new(user_info)
 
-    redirect_to_index = redirect('/login-success')
-    response = make_response(redirect_to_index)
-    response.set_cookie('dmc_session', session_hash)
+        redirect_to_index = redirect('/login-success')
+        response = make_response(redirect_to_index)
+        response.set_cookie('dmc_session', session_hash)
+    except:
+        redirect_to_index = redirect('/login-failure')
+        response = make_response(redirect_to_index)
+        
     return response
 
 @authentication.route("/login-success")
@@ -40,6 +45,15 @@ def login_success():
 
     return response
 
+@authentication.route("/login-failure")
+def login_failure():
+    response = make_response(
+        render_template(
+        'login-failure.html'
+        )
+    )
+
+    return response
 
 @authentication.route("/validate-user")
 def validate_user():
