@@ -1,4 +1,4 @@
-from flask import request, current_app, Blueprint, render_template, make_response, jsonify
+from flask import request, current_app, Blueprint, render_template, make_response, jsonify, redirect
 from database import db_session
 from models import User
 import requests
@@ -22,14 +22,22 @@ def login_callback():
     user_info = google_auth.get_user_keys(code)
     session_hash = user_controller.get_or_create_google_new(user_info)
 
+    redirect_to_index = redirect('/login-success')
+    response = make_response(redirect_to_index)
+    response.set_cookie('dmc_session', session_hash)
+    return response
+
+@authentication.route("/login-success")
+def login_success():
+    user = user_controller.return_valid_user(request.cookies.get('dmc_session'))
+
     response = make_response(
         render_template(
         'login-callback.html',
-        user_name=user_info['name'],
-        user_id=user_info['user_id'])
+        user_name=user.name,
+        user_id=user.third_party_id)
     )
 
-    response.set_cookie('dmc_session', session_hash)
     return response
 
 
