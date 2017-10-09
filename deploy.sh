@@ -15,25 +15,22 @@ stop_previous() {
   sudo docker rm authentication-server authentication-mariadb
 }
 
-# stop_previous_db() {
-#   kill -9 $(pgrep -f flask)
-#   sudo docker stop authentication-mariadb
-#   sudo docker rm authentication-mariadb
-# }
-
 start_db() {
   cd database
-  sudo docker build -t authentication-mariadb .
-  sudo docker run --network=auth_net --name authentication-mariadb --env-file ./env_variables.list -d authentication-mariadb
+  sudo docker build --build-arg auth_svc_root_db_pass=$AUTH_SVC_ROOT_DB_PASS --build-arg auth_svc_db_name=$AUTH_SVC_DB_NAME --build-arg auth_svc_db_user=$AUTH_SVC_DB_USER --build-arg auth_svc_db_pass=$AUTH_SVC_DB_PASS -t authentication-mariadb .
+  sudo docker run --network=auth_net --name authentication-mariadb -d authentication-mariadb
   cd ..
 }
 
 start_flask() {
   cd flask
-  sudo docker build --build-arg google_oauth_client_id=60575523939-uecotuip3btkh66604hnk9o9gm6uiv9t.apps.googleusercontent.com --build-arg google_oauth_secret=XyhqeMKs86XXW1vGWxQB0Tq0 --build-arg auth_svc_db_name=authentication --build-arg auth_svc_db_user=authentication --build-arg auth_svc_db_pass=authenticationpass -t authentication-server .
-  # sudo docker run --name authentication-server -d -link authentication-mariadb -p 8090:8090 authentication-server
-  sudo docker run --network=auth_net --name authentication-server -d authentication-server
+  sudo docker build  --build-arg google_oauth_client_id=$GOOGLE_OAUTH_CLIENT_ID --build-arg google_oauth_secret=$GOOGLE_OAUTH_SECRET --build-arg auth_svc_db_name=$AUTH_SVC_DB_NAME --build-arg auth_svc_db_user=$AUTH_SVC_DB_USER --build-arg auth_svc_db_pass=$AUTH_SVC_DB_PASS  -t authentication-server .
+  sudo docker run --network=auth_net --name authentication-server -p 8090:8090 -d authentication-server
   cd ..
+}
+
+start_network() {
+  sudo docker network create --driver bridge auth_net
 }
 
 start_flask_debug() {
@@ -47,19 +44,14 @@ start_flask_debug() {
 if [ "$MODE" == "dev" ]
 then
   stop_previous
-  # start_network
+  start_network
   start_db
+  sleep 8
   start_flask
-elif [ "$MODE" == "debug" ]
-then
-  stop_previous
-  # start_network
-  start_db
-  start_flask_debug
 elif [ "$MODE" == "prod" ]
 then
   stop_previous
-  # start_network
+  start_network
   start_db
   start_flask
 elif [ "$MODE" == "stop" ]
@@ -70,5 +62,5 @@ then
   clean_docker
 else
   echo "USAGE: deploy.sh [MODE]"
-  echo "MODE is either dev, debug, or prod"
+  echo "MODE is either dev, prod, stop or clean"
 fi
