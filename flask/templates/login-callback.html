@@ -3,13 +3,22 @@
   <head>
     <meta charset="utf-8">
     <title>Login Callback</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,400" rel="stylesheet">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/main.css') }}">
   </head>
   <body>
-    <div>
-      <h1>SUCCESS!</h1>
-      <h2>User Data</h2>
-      <h4>Name: {{user_name}}</h4>
-      <h4>Id: {{user_id}}</h4>
+    <div class="header">
+      <div class="row-start">
+        <img src="{{ url_for('static', filename='images/DMDII-Gear-small.png') }}"></img>
+        <h1><b>DMDII</b> Sign On</h1>
+      </div>
+      <a class="login-button" href="/login">
+        Log In
+      </a>
+    </div>
+    <div class="container column">
+      <h2>Success!</h2>
+      <div>You are logged in as: <b>{{user_name}}</b>, Google ID <b>{{user_id}}</b></div>
     </div>
   </body>
 </html>
