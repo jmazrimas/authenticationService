@@ -1,4 +1,4 @@
-from flask import request, current_app, Blueprint, render_template, make_response, jsonify, redirect
+from flask import request, current_app, Blueprint, render_template, make_response, jsonify, redirect, url_for
 from database import db_session
 from models import User
 import requests
@@ -25,11 +25,11 @@ def login_callback():
         user_info = google_auth.get_user_keys(code)
         session_hash = user_controller.get_or_create_google_new(user_info)
 
-        redirect_to_index = redirect('/signonservice/login-success')
+        redirect_to_index = redirect(url_for('authenticationserver.login_success'))
         response = make_response(redirect_to_index)
         response.set_cookie('dmc_session', session_hash)
     except:
-        redirect_to_index = redirect('/signonservice/login-failure')
+        redirect_to_index = redirect(url_for('authenticationserver.login_failure'))
         response = make_response(redirect_to_index)
 
     return response
