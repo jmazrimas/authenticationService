@@ -5,8 +5,10 @@ import requests
 import google_auth
 from datetime import datetime
 import user_controller
+import app
 
-authentication = Blueprint('authentication', __name__)
+# authentication = Blueprint('authentication', __name__)
+authentication = app.init_bp()
 
 @authentication.route("/")
 def main():

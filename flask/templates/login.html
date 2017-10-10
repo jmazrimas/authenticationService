@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <title>Login</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,400" rel="stylesheet">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/main.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('authenticationserver.static', filename='style/main.css') }}">
   </head>
   <body>
     <div class="header">
       <div class="row-start">
-        <img src="{{ url_for('static', filename='images/DMDII-Gear-small.png') }}"></img>
+        <img src="{{ url_for('authenticationserver.static', filename='images/DMDII-Gear-small.png') }}"></img>
         <h1><b>DMDII</b> Sign On</h1>
       </div>
       <a class="login-button" href="/signonservice/login">

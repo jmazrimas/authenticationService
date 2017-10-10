@@ -24,7 +24,7 @@ start_db() {
 
 start_flask() {
   cd flask
-  sudo docker build  --build-arg google_oauth_client_id=$GOOGLE_OAUTH_CLIENT_ID --build-arg google_oauth_secret=$GOOGLE_OAUTH_SECRET --build-arg auth_svc_db_name=$AUTH_SVC_DB_NAME --build-arg auth_svc_db_user=$AUTH_SVC_DB_USER --build-arg auth_svc_db_pass=$AUTH_SVC_DB_PASS  -t authentication-server .
+  sudo docker build  --build-arg google_oauth_client_id=$GOOGLE_OAUTH_CLIENT_ID --build-arg google_oauth_secret=$GOOGLE_OAUTH_SECRET --build-arg auth_svc_db_name=$AUTH_SVC_DB_NAME --build-arg auth_svc_db_user=$AUTH_SVC_DB_USER --build-arg auth_svc_db_pass=$AUTH_SVC_DB_PASS --build-arg current_server_url=$CURRENT_SERVER_URL -t authentication-server .
   sudo docker run --network=auth_net --name authentication-server -p 8090:8090 -d authentication-server
   cd ..
 }

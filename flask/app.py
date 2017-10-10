@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, Blueprint
 import mysql.connector
 from database import init_engine, init_db
 import os
@@ -17,6 +17,9 @@ def init_app():
     app.register_blueprint(authentication, url_prefix='/signonservice')
 
     return app
+
+def init_bp():
+    return Blueprint('authenticationserver', __name__, template_folder='templates', static_folder='static')
 
 if __name__ == '__main__':
     app = init_app()

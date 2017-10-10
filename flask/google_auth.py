@@ -9,13 +9,14 @@ def getGoogleKeys():
     google_keys['secret']=os.getenv('GOOGLE_OAUTH_SECRET')
     return google_keys
 
+current_server_url = os.getenv('CURRENT_SERVER_URL')
 google_keys = getGoogleKeys()
 
 def generate_login_url():
     base_url = "https://accounts.google.com/o/oauth2/v2/auth"
     parsed_url = list(urlparse.urlparse(base_url))
     params = {
-        'redirect_uri': 'http://localhost:8090/signonservice/login-callback',
+        'redirect_uri': current_server_url+'/signonservice/login-callback',
         'scope': 'profile',
         'access_type': 'offline',
         'response_type': 'code',
@@ -34,7 +35,7 @@ def generate_token_url(code):
         'code': code,
         'client_id': google_keys['client'],
         'client_secret': google_keys['secret'],
-        'redirect_uri': 'http://localhost:8090/signonservice/login-callback',
+        'redirect_uri': current_server_url+'/signonservice/login-callback',
         'grant_type': 'authorization_code'
     }
     parsed_url[4] = urlencode(params)
