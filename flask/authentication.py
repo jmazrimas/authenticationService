@@ -25,11 +25,11 @@ def login_callback():
         user_info = google_auth.get_user_keys(code)
         session_hash = user_controller.get_or_create_google_new(user_info)
 
-        redirect_to_index = redirect(url_for('authenticationserver.login_success'))
+        redirect_to_index = redirect(url_for('authenticationserver.login_success', _external=True))
         response = make_response(redirect_to_index)
         response.set_cookie('dmc_session', session_hash)
     except:
-        redirect_to_index = redirect(url_for('authenticationserver.login_failure'))
+        redirect_to_index = redirect(url_for('authenticationserver.login_failure', _external=True))
         response = make_response(redirect_to_index)
 
     return response
