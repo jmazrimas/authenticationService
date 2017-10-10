@@ -71,8 +71,8 @@ body {
   /*height: 92px;*/
   width: 191px;
   height: 46px;
-  /*background-image: url(/static/images/btn_google_signin_dark_normal_web@2x.png);*/
-  background-image: url(/static/images/btn_google_signin_dark_normal_web.png);
+  /*background-image: url(/signonservice/static/images/btn_google_signin_dark_normal_web@2x.png);*/
+  background-image: url(/signonservice/static/images/btn_google_signin_dark_normal_web.png);
   background-position: 0 0;
 }
 
@@ -82,11 +82,11 @@ body {
 }
 
 #google-button:hover {
-  /*background-image: url(/static/images/btn_google_signin_dark_focus_web@2x.png);*/
-  background-image: url(/static/images/btn_google_signin_dark_focus_web.png);
+  /*background-image: url(/signonservice/static/images/btn_google_signin_dark_focus_web@2x.png);*/
+  background-image: url(/signonservice/static/images/btn_google_signin_dark_focus_web.png);
 }
 
 #google-button:active {
-  /*background-image: url(/static/images/btn_google_signin_dark_pressed_web@2x.png);*/
-  background-image: url(/static/images/btn_google_signin_dark_pressed_web.png);
+  /*background-image: url(/signonservice/static/images/btn_google_signin_dark_pressed_web@2x.png);*/
+  background-image: url(/signonservice/static/images/btn_google_signin_dark_pressed_web.png);
 }
