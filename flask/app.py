@@ -14,7 +14,7 @@ def init_app():
     init_engine(app.config['SQLALCHEMY_DATABASE_URI'])
     init_db()
     from authentication import authentication
-    app.register_blueprint(authentication)
+    app.register_blueprint(authentication, url_prefix='/signonservice')
 
     return app
 
