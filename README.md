@@ -8,4 +8,5 @@ A simple container for authentication
   * AUTH_SVC_DB_PASS  -- db password for auth app
   * GOOGLE_OAUTH_CLIENT_ID  -- client id for app registered with google
   * GOOGLE_OAUTH_SECRET  -- google secret for oauth service
+  * CURRENT_SERVER_URL  -- url of current server (i.e., http://localhost:8090 OR https://dev-web2.opendmc.org). This is used to manage redirects.
 * run ./deploy.sh with 'dev'
