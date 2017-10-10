@@ -6,9 +6,13 @@ import google_auth
 from datetime import datetime
 import user_controller
 import app
+import os
 
 # authentication = Blueprint('authentication', __name__)
 authentication = app.init_bp()
+current_server_url = os.getenv('CURRENT_SERVER_URL')
+login_success_url = current_server_url+"/signonservice/login-success"
+login_failure_url = current_server_url+"/signonservice/login-failure"
 
 @authentication.route("/")
 def main():
@@ -25,11 +29,11 @@ def login_callback():
         user_info = google_auth.get_user_keys(code)
         session_hash = user_controller.get_or_create_google_new(user_info)
 
-        redirect_to_index = redirect(url_for('authenticationserver.login_success', _external=True))
+        redirect_to_index = redirect(login_success_url)
         response = make_response(redirect_to_index)
         response.set_cookie('dmc_session', session_hash)
     except:
-        redirect_to_index = redirect(url_for('authenticationserver.login_failure', _external=True))
+        redirect_to_index = redirect(login_failure_url)
         response = make_response(redirect_to_index)
 
     return response
